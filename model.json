@@ -1,0 +1,15 @@
+{
+    "dimensions": [
+        {"name":"agencyname"},
+		{"name":"regionname"},
+		{"name":"purposename"},
+		{"name":"usd_disbursement"}
+    ],
+    "cubes": [
+        {
+            "name": "oecd_crs",
+            "dimensions": ["agencyname", "regionname","purposename"]
+
+        }
+    ]
+}
