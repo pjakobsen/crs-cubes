@@ -1,7 +1,20 @@
 import sys
+import sqlite3
+import sqlalchemy
+
 from messytables import CSVTableSet, type_guess, \
   types_processor, headers_guess, headers_processor, \
   offset_processor, any_tableset
+
+
+engine = sqlalchemy.create_engine('sqlite:///foo.sqlite')
+metadata = sqlalchemy.MetaData(bind = engine)
+crs_table = sqlalchemy.Table("crs", metadata)
+col = sqlalchemy.schema.Column("field_foo", sqlalchemy.Integer)
+crs_table.append_column(col)
+print crs_table
+crs_table.create()
+sys.exit()
 
 fh = open('data.csv', 'rb')
 
@@ -36,17 +49,27 @@ types = type_guess(row_set.sample, strict=True)
 
 # combine names and types:
 db_columns = zip(headers, types)
-for c in db_columns:
-    print c[0],c[1]
-sys.exit()
+
+'''Too messy to try to create SQL command, and then for it to be not portable.  Use SQLAlchemy instead'''
+
+
+# cols= ["{0} {1}".format(c[0],c[1]).strip() for c in db_columns]
+# command = 'CREATE TABLE crs ({0});'.format(" ".join(cols))
+# print command
+
+
+
+
 
 # and tell the row set to apply these types to
 # each row when traversing the iterator:
 row_set.register_processor(types_processor(types))
 
 
-print "---------------------------------"
+print "------------- Making a SQL Command --------------------"
 # now run some operation on the data:
 for row in row_set:
    print row
    sys.exit()
+   
+ 

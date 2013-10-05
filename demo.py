@@ -8,6 +8,6 @@ cube = model.cube("oecd_crs")
 
 browser = ws.browser(cube)
 
-result = browser.aggregate()
+result = browser.aggregate()    
 
 print result.summary
