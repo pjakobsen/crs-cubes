@@ -20,7 +20,7 @@ crs = Table('crs', metadata, autoload=True)
 
 
 ''' Read CVS '''
-fh = open('data.csv', 'rb')
+fh = open('crs2011.csv', 'rb')
 
 # Load a file object:
 table_set = CSVTableSet(fh,delimiter="|")
@@ -60,26 +60,3 @@ def add_record(row):
 # now run some operation on the data:
 for row in row_set:
   add_record(row)
-  sys.exit()
-
-
-
-
-
-    # i = users.insert()
-    # i.execute(name='Mary', age=30, password='secret')
-    # i.execute({'name': 'John', 'age': 42},
-    #           {'name': 'Susan', 'age': 57},
-    #           {'name': 'Carl', 'age': 33})
-    # 
-    # s = users.select()
-    # rs = s.execute()
-    # 
-    # row = rs.fetchone()
-    # print 'Id:', row[0]
-    # print 'Name:', row['name']
-    # print 'Age:', row.age
-    # print 'Password:', row[users.c.password]
-    # 
-    # for row in rs:
-    #     print row.name, 'is', row.age, 'years old'

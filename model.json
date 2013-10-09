@@ -1,5 +1,7 @@
 {
     "dimensions": [
+		{"name":"Year"},
+		{"name":"donorname"},
         {"name":"agencyname"},
 		{"name":"regionname"},
 		{"name":"purposename"},
@@ -7,8 +9,15 @@
     ],
     "cubes": [
         {
-            "name": "oecd_crs",
-            "dimensions": ["agencyname", "regionname","purposename"]
+            "name": "crs",
+            "dimensions": ["Year","donorname","agencyname", "regionname","usd_disbursement"],
+			"measures": [
+				{"name":"usd_disbursement",
+				 "label":"Contract Amount",
+				 "aggregations":["sum"]
+				}
+			
+			]
 
         }
     ]
