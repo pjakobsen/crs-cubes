@@ -10,7 +10,7 @@
     "cubes": [
         {
             "name": "crs",
-            "dimensions": ["Year","donorname","agencyname", "regionname","usd_disbursement"],
+            "dimensions": ["Year","donorname","agencyname", "regionname","purposename","usd_disbursement"],
 			"measures": [
 				{"name":"usd_disbursement",
 				 "label":"Contract Amount",
