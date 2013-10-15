@@ -8,7 +8,9 @@ from messytables import CSVTableSet, type_guess, \
 
 
 ''' SET UP DB '''
-db = create_engine('sqlite:///foo.sqlite')
+#db = create_engine('sqlite:///foo.sqlite')
+
+db=create_engine("postgres://localhost/crs")
 
 db.echo = False  # Try changing this to True and see what happens
 
@@ -20,7 +22,7 @@ crs = Table('crs', metadata, autoload=True)
 
 
 ''' Read CVS '''
-fh = open('crs2011.csv', 'rb')
+fh = open('data/canada2011.csv', 'rb')
 
 # Load a file object:
 table_set = CSVTableSet(fh,delimiter="|")
