@@ -31,7 +31,7 @@ now =  strftime("%Y-%m-%d %H:%M:%S", gmtime())
 print "Last time headers were checked"
 print now
 f = open("/home/jakobsen/public_html/data/cida.txt","w") #opens file with name of "test.txt"
-f.write("'last-checked:'",now)
+f.write("'last-checked:'"+now)
 f.write("\n")
-f.write("'last-modified:'",last_mod)
+f.write("'last-modified:'"+last_mod)
 f.close()

@@ -20,7 +20,7 @@ import cubes
 
 model = cubes.load_model("model.json")
 
-ws = cubes.create_workspace("sql",model,url="sqlite:///foo.sqlite")
+ws = cubes.create_workspace("sql",model,url="sqlite:///test.db")
 
 cube = model.cube("crs")
 
