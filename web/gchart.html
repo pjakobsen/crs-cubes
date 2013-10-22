@@ -1,0 +1,33 @@
+<html>
+  <head>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+     google.load('visualization', '1', {'packages': ['geochart']});
+     google.setOnLoadCallback(drawMarkersMap);
+
+      function drawMarkersMap() {
+	  	var jsonData = $.ajax({
+	          url: "getData.php",
+	          dataType:"json",
+	          async: false
+	          }).responseText;
+
+	      // Create our data table out of JSON data loaded from server.
+	  var data = new google.visualization.DataTable(jsonData);
+     
+      var options = {
+        region: 'world',
+        displayMode: 'markers',
+        colorAxis: {colors: ['green', 'blue']}
+      };
+
+      var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    };
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 1300px; height: 700px;"></div>
+  </body>
+</html>

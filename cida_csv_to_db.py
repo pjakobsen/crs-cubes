@@ -72,3 +72,5 @@ for row in row_set:
         i.execute(data)
     except:
         raise
+        
+    
