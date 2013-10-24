@@ -3,6 +3,7 @@ import sys
 import locale
 import sqlite3
 import sqlalchemy
+from pprint import pprint
 
 def contribution(row):
     print row 
@@ -30,7 +31,10 @@ def dict_read(f):
     contributions=[]
     # skip the first line
     for i,line in enumerate(csv_file):
+        
+   
         country_line = line['Country']
+        project_number=line['Project Number']
         dollars = line["Maximum CIDA Contribution"]
         # cida_focus = line["CIDA Sector of Focus"]
         # dac_focus = line["DAC Sector"]
@@ -43,15 +47,15 @@ def dict_read(f):
             pass
        
         if "100%" in country_line:
-            contributions.append((country_line.split(": ")[0], amount))
+            #print(country_line.split(": ")[0], amount)
+            contributions.append((country_line.split(": ")[0],project_number, amount))
         else: 
             participating_countries = country_line.split("%,")
-            percentages =  [(p.rstrip("%").split(": ")[0],(float(p.rstrip("%").split(": ")[1])/100)*amount) for p in participating_countries]
+            percentages =  [(p.rstrip("%").split(": ")[0],project_number,(float(p.rstrip("%").split(": ")[1])/100)*amount) for p in participating_countries]
             
             
             contributions += percentages
-          
-           
+     
     return contributions 
 
 
@@ -70,6 +74,8 @@ def create_db():
         project_table.append_column(col)
     col = sqlalchemy.schema.Column("country", sqlalchemy.Text)
     project_table.append_column(col)
+    col = sqlalchemy.schema.Column("project_number", sqlalchemy.Text)
+    project_table.append_column(col)
     col = sqlalchemy.schema.Column("contribution", sqlalchemy.Integer)
     project_table.append_column(col)
     project_table.create()
@@ -85,10 +91,11 @@ if __name__ == "__main__":
     # with these amounts in a database, we can now set up a normalized database that can be cubed
     for i,a in enumerate(amounts):
         pass
-        print i, "-------"
-        print a[0],int(round(a[1]))
-        data = {"country":a[0], "contribution":int(round(a[1]))}
-
+        # print i, "-------"
+        # print a[0],int(round(a[1]))
+        # Text including country names is saved as 8-bit ascii, so it must be converted
+        data = {"country":(a[0]).decode("UTF-8"), "project_number":a[1], "contribution":int(round(a[2]))}
+        print data
         i = table.insert()
         try:
             i.execute(data)

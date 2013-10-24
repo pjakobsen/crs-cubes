@@ -20,13 +20,13 @@ import cubes
 
 model = cubes.load_model("cida_model.json")
 
-ws = cubes.create_workspace("sql",model,url="sqlite:///cida.db")
+ws = cubes.create_workspace("sql",model,url="sqlite:///cida_norm.db")
 
 cube = model.cube("projects")
 
 browser = ws.browser(cube)
 
-result = browser.aggregate(drilldown=["Country"])    
+result = browser.aggregate(drilldown=["country"])    
 
 print result.summary
 print "---------------------"

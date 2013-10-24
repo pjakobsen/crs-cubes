@@ -1,14 +1,15 @@
 {
     "dimensions": [
-		{"name":"Country"},
-		{"name":"Maximum CIDA Contribution"}
+		{"name":"country"},
+		{"name":"project_number"},
+		{"name":"contribution"}
     ],
     "cubes": [
         {
             "name": "projects",
-            "dimensions": ["Country","Maximum CIDA Contribution"],
+            "dimensions": ["country","project_number","contribution"],
 			"measures": [
-				{"name":"Maximum CIDA Contribution",
+				{"name":"contribution",
 				 "label":"Maximum CIDA Contribution",
 				 "aggregations":["sum"]
 				}
