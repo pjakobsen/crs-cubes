@@ -26,7 +26,7 @@ cube = model.cube("projects")
 
 browser = ws.browser(cube)
 
-result = browser.aggregate(drilldown=["country"])    
+result = browser.aggregate(drilldown=["project_number"])    
 
 print result.summary
 print "---------------------"

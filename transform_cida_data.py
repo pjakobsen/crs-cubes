@@ -1,9 +1,27 @@
+# This Python file uses the following encoding: utf-8
 import csv
 import sys
 import locale
 import sqlite3
 import sqlalchemy
 from pprint import pprint
+from countryinfo import countries
+
+
+
+def continent(country):
+    if country in  ["South Sudan","Saint Helena","Western Sahara","Burkina-Faso","Congo","Sao Tome and Principe","Turks and Caicos Islands","Gambia",u"Côte d'Ivoire","Africa multiple countries"]:
+        return "Africa"
+    elif country in ["Democratic People's Republic of Korea","Timor-Leste","Burma (Myanmar)","China","Asia multiple countries","Micronesia","Cook Islands","Niue"]:return "Asia"
+    elif country in ["Anguilla","Montserrat","Cayman Islands","British Virgin Islands"]: return "North America"
+    elif country in ["Europe multiple countries","Former Yugoslav Republic of Macedonia"]: return "Europe"
+    elif country == "Americas multiple countries":
+        return ""  
+    else:
+        return [c['continent'] for c in countries if c['name']==country][0]
+
+print continent("Angola")    
+
 
 def contribution(row):
     print row 
@@ -74,6 +92,8 @@ def create_db():
         project_table.append_column(col)
     col = sqlalchemy.schema.Column("country", sqlalchemy.Text)
     project_table.append_column(col)
+    col = sqlalchemy.schema.Column("continent", sqlalchemy.Text)
+    project_table.append_column(col)
     col = sqlalchemy.schema.Column("project_number", sqlalchemy.Text)
     project_table.append_column(col)
     col = sqlalchemy.schema.Column("contribution", sqlalchemy.Integer)
@@ -94,7 +114,24 @@ if __name__ == "__main__":
         # print i, "-------"
         # print a[0],int(round(a[1]))
         # Text including country names is saved as 8-bit ascii, so it must be converted
-        data = {"country":(a[0]).decode("UTF-8"), "project_number":a[1], "contribution":int(round(a[2]))}
+        '''
+        >>> print "C\xf4te d'Ivoire"
+        C?te d'Ivoire
+        >>> print u"C\xf4te d'Ivoire"
+        C..te d'Ivoire
+        '''
+        print (a[0])
+        print "--------"
+        country=(a[0]).decode("UTF-8")
+        if ", " in country: 
+            split_country = country.split(", ")
+            country = split_country[1] + " of " + split_country[0]
+            
+        print country
+        data = {"country":country,
+         "continent":continent(country),
+         "project_number":a[1], 
+         "contribution":int(round(a[2]))}
         print data
         i = table.insert()
         try:
